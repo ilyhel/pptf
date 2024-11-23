@@ -24,29 +24,29 @@ jobs:
 
     - name: 'Initialize Terraform'
       env:
-        POWERPLATFORM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-        POWERPLATFORM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-        POWERPLATFORM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+        POWER_PLATFORM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+        POWER_PLATFORM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+        POWER_PLATFORM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
       run: terraform init
 
     - name: 'Validate Terraform'
       env:
-        POWERPLATFORM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-        POWERPLATFORM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-        POWERPLATFORM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+        POWER_PLATFORM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+        POWER_PLATFORM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+        POWER_PLATFORM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
       run: terraform validate
 
     - name: 'Plan Terraform'
       env:
-        POWERPLATFORM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-        POWERPLATFORM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-        POWERPLATFORM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+        POWER_PLATFORM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+        POWER_PLATFORM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+        POWER_PLATFORM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
       run: terraform plan -out=tfplan
 
     - name: 'Apply Terraform'
       if: github.ref == 'refs/heads/main'
       env:
-        POWERPLATFORM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-        POWERPLATFORM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-        POWERPLATFORM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+        POWER_PLATFORM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+        POWER_PLATFORM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+        POWER_PLATFORM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
       run: terraform apply tfplan

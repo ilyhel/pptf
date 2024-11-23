@@ -29,9 +29,7 @@ jobs:
   terraform:
     name: 'Deploy Power Platform Resources'
     runs-on: ubuntu-latest
-    env:
-      #this is needed since we are running terraform with read-only permissions
-      ARM_SKIP_PROVIDER_REGISTRATION: true
+  
 
     steps:
     - name: Debug

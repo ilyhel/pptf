@@ -9,7 +9,7 @@ terraform {
 
 
 provider "powerplatform" {
- 
+ use_oidc = true
 }
 
 resource "powerplatform_environment" "development" {

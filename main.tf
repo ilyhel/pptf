@@ -6,10 +6,14 @@ terraform {
   }
 }
 
+variable "client_id" {}
+variable "client_secret" {}
+variable "tenant_id" {}
+
 provider "powerplatform" {
-  client_id     = var.AZURE_CLIENT_ID
-  client_secret = var.AZURE_CLIENT_SECRET
-  tenant_id     = var.AZURE_TENANT_ID
+  client_id     = var.client_id
+  client_secret = var.client_secret
+  tenant_id     = var.tenant_id
 }
 
 resource "powerplatform_environment" "development" {

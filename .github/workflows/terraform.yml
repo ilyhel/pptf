@@ -13,8 +13,7 @@ env:
   POWER_PLATFORM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
   POWER_PLATFORM_CLIENT_SECRET: ${{ secrets.AZURE_TENANT_ID }}
 
-  ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-  ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+
   
   TF_VAR_POWER_PLATFORM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
   TF_VAR_POWER_PLATFORM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
@@ -47,6 +46,14 @@ jobs:
       uses: hashicorp/setup-terraform@v2
       with:
         terraform_version: 1.9.8
+
+    - name: 'Authenticate using Azure CLI'
+      env:
+        AZURE_USERNAME: ${{ secrets.AZURE_USERNAME }}
+        AZURE_PASSWORD: ${{ secrets.AZURE_PASSWORD }}
+      run: |
+        echo "Logging in using Azure CLI..."
+        az login -u $AZURE_USERNAME -p $AZURE_PASSWORD    
 
     - name: 'Initialize Terraform'
       env:

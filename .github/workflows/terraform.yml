@@ -8,6 +8,12 @@ on:
     branches:
       - main
 
+env:
+  POWER_PLATFORM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+  POWER_PLATFORM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+  POWER_PLATFORM_CLIENT_SECRET: ${{ secrets.AZURE_TENANT_ID }}
+  
+
 jobs:
   terraform:
     name: 'Deploy Power Platform Resources'

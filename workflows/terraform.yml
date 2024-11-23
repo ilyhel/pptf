@@ -1,0 +1,41 @@
+name: Power Platform Terraform Deployment
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  terraform:
+    name: 'Deploy Power Platform Resources'
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 'Checkout repository'
+      uses: actions/checkout@v3
+
+    - name: 'Setup Terraform'
+      uses: hashicorp/setup-terraform@v2
+      with:
+        terraform_version: 1.9.8
+
+    - name: 'Initialize Terraform'
+      env:
+        ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+        ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+        ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+        
+      run: terraform init
+
+    - name: 'Validate Terraform'
+      run: terraform validate
+
+    - name: 'Plan Terraform'
+      run: terraform plan -out=tfplan
+
+    - name: 'Apply Terraform'
+      if: github.ref == 'refs/heads/main'
+      run: terraform apply tfplan

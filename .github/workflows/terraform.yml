@@ -12,7 +12,7 @@ env:
   POWER_PLATFORM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
   POWER_PLATFORM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
   POWER_PLATFORM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-
+  TARGET_DIR: ${{ github.workspace }}
 
 jobs:
   terraform:
@@ -45,7 +45,19 @@ jobs:
       run: terraform validate
 
     - name: 'Plan Terraform'
-      run: terraform plan -out=tfplan
+      id: tf-plan
+      run: |
+        export exitcode=0
+        terraform -chdir=$TARGET_DIR plan -detailed-exitcode -no-color -out tfplan || export exitcode=$?
+
+        echo "exitcode=$exitcode" >> $GITHUB_OUTPUT
+        
+        if [ $exitcode -eq 1 ]; then
+          echo Terraform Plan Failed!
+          exit 1
+        else 
+          exit 0
+        fi
 
     - name: 'Apply Terraform'
       if: github.ref == 'refs/heads/main'
